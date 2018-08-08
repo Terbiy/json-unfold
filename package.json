@@ -1,0 +1,22 @@
+{
+  "name": "json-unfold",
+  "version": "0.1.0",
+  "description": "JSON Unfold is the functionality aimed at enhancement of communication between developers during API discussion",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "json",
+    "communication",
+    "analysis"
+  ],
+  "author": {
+    "name": "German Tebiev",
+    "email": "terbiyarchitect@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.4"
+  }
+}
