@@ -1,4 +1,4 @@
-const jsonUnfold = require('./json-unfold');
+const { jsonUnfold } = require('./json-unfold');
 
 describe('Right, wrong and trivial values', () => {
     const EMPTY_STRING = '';

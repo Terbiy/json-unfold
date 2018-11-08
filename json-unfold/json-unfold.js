@@ -1,3 +1,5 @@
+const { isTrivial } = require('./helpers/types-helper');
+
 const DEFAULT_RETURN = '';
 
 function jsonUnfold(json) {
@@ -19,37 +21,6 @@ function handle(parsedJson) {
     return parsedJson;
 }
 
-function isTrivial(parsedJson) {
-    return [
-        isNumber,
-        isBoolean,
-        isNull,
-        isEmptyArray,
-        isEmptyObject
-    ].some((check) => check(parsedJson));
-}
-
-function isBoolean(essence) {
-    return typeof essence === typeof true;
-}
-
-function isNumber(essence) {
-    return typeof essence === typeof 42;
-}
-
-function isNull(essence) {
-    return essence === null;
-}
-
-function isEmptyArray(essence) {
-    return (
-        Array.isArray(essence) &&
-        essence.length === 0
-    );
-}
-
-function isEmptyObject(essence) {
-    return Object.keys(essence).length === 0;
-}
-
-module.exports = jsonUnfold;
+module.exports = {
+    jsonUnfold,
+};
