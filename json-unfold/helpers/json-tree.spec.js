@@ -1,5 +1,6 @@
 const JsonTree = require('./json-tree');
 const JsonNode = require('./json-node');
+const { wrapArrayChildName } = require('./node-handlers');
 
 function getFlatFullObject() {
     return {
@@ -196,30 +197,22 @@ describe('Gathering leaves', () => {
 describe('Traversing and modifying nodes', () => {
     it('Should traverse every node in flat tree', () => {
         const flatFullFakeTree = getFlatFullFakeTree();
-        flatFullFakeTree.name = exclaim(flatFullFakeTree.name);
-        flatFullFakeTree.children.forEach(exclaimName);
+        wrapArrayChildName(flatFullFakeTree);
+        flatFullFakeTree.children.forEach(wrapArrayChildName);
 
         const flatFullTree = new JsonTree(getFlatFullObject());
-        flatFullTree.forEach(exclaimName);
+        flatFullTree.forEach(wrapArrayChildName);
 
         expect(flatFullTree.tree).toEqual(flatFullFakeTree);
     });
 
     it('Should traverse every node in deep tree', () => {
         const deepTree = new JsonTree(getDeepObject());
-        deepTree.forEach(exclaimName);
+        deepTree.forEach(wrapArrayChildName);
 
         const deepFakeStructure = getDeepFakeStructure();
-        deepFakeStructure.all.forEach(exclaimName);
+        deepFakeStructure.all.forEach(wrapArrayChildName);
 
         expect(deepTree.tree).toEqual(deepFakeStructure.tree);
     });
 });
-
-function exclaimName(named) {
-    named.name = exclaim(named.name);
-}
-
-function exclaim(string) {
-    return string + '!';
-}

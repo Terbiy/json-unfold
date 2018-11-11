@@ -1,4 +1,6 @@
 const { isTrivial } = require('./helpers/types-helper');
+const JsonTree = require('./helpers/json-tree');
+const { wrapArrayChildName } = require('./helpers/node-handlers');
 
 const DEFAULT_RETURN = '';
 
@@ -17,6 +19,9 @@ function handle(parsedJson) {
         console.log('Passed JSON is trivial.');
         return DEFAULT_RETURN;
     }
+
+    const jsonTree = new JsonTree(parsedJson);
+    jsonTree.forEach(wrapArrayChildName);
 
     return parsedJson;
 }
