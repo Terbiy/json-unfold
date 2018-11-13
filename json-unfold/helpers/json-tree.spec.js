@@ -216,3 +216,35 @@ describe('Traversing and modifying nodes', () => {
         expect(deepTree.tree).toEqual(deepFakeStructure.tree);
     });
 });
+
+const accumulateNames = (accumulatedName, node) => {
+    return `${node.name}${accumulatedName}`;
+};
+
+describe('Accumulating value when applying reduce', () => {
+    it('Should build the array of chained names for flat object', () => {
+        const flatFullTree = new JsonTree(getFlatFullObject());
+
+        expect(flatFullTree.reduceByLeaf(accumulateNames, '')).toEqual([
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f'
+        ]);
+    });
+
+    it('Should build the array of chained names for deep object', () => {
+        const deepTree = new JsonTree(getDeepObject());
+
+        expect(deepTree.reduceByLeaf(accumulateNames, '')).toEqual([
+            'ab',
+            'ac',
+            'ad0',
+            'ad1',
+            'ad2',
+            'e'
+        ]);
+    })
+});

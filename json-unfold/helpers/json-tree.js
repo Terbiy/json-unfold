@@ -8,6 +8,7 @@ class JsonTree {
         this.leaves = [];
         this.iteratedNodes = new Set();
         this.handle = () => {};
+        this.accumulate = () => {};
 
         this._transformToTree();
     }
@@ -20,6 +21,25 @@ class JsonTree {
         });
 
         this.iteratedNodes.clear();
+    }
+
+    reduceByLeaf(accumulate, initialValue) {
+        this.accumulate = accumulate;
+
+        return this.leaves.map((leaf) => {
+            return this.reduceNode(initialValue, leaf);
+        });
+    }
+
+    reduceNode(accumulation, node) {
+        const currentAccumulation = this.accumulate(accumulation, node);
+
+        const { parent } = node;
+        if (parent) {
+            return this.reduceNode(currentAccumulation, parent);
+        }
+
+        return currentAccumulation;
     }
 
     _handleYetToBeHandled(leaf) {
