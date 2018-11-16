@@ -1,5 +1,6 @@
 const JsonTree = require('./json-tree');
 const JsonNode = require('./json-node');
+const { accumulateName } = require("./node-handlers");
 const { wrapArrayChildName } = require('./node-handlers');
 
 function getFlatFullObject() {
@@ -217,15 +218,11 @@ describe('Traversing and modifying nodes', () => {
     });
 });
 
-const accumulateNames = (accumulatedName, node) => {
-    return `${node.name}${accumulatedName}`;
-};
-
 describe('Accumulating value when applying reduce', () => {
     it('Should build the array of chained names for flat object', () => {
         const flatFullTree = new JsonTree(getFlatFullObject());
 
-        expect(flatFullTree.reduceByLeaf(accumulateNames, '')).toEqual([
+        expect(flatFullTree.reduceByLeaf(accumulateName, '')).toEqual([
             'a',
             'b',
             'c',
@@ -238,7 +235,7 @@ describe('Accumulating value when applying reduce', () => {
     it('Should build the array of chained names for deep object', () => {
         const deepTree = new JsonTree(getDeepObject());
 
-        expect(deepTree.reduceByLeaf(accumulateNames, '')).toEqual([
+        expect(deepTree.reduceByLeaf(accumulateName, '')).toEqual([
             'ab',
             'ac',
             'ad0',

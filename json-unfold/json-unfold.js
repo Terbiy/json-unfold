@@ -1,5 +1,7 @@
 const { isTrivial } = require('./helpers/types-helper');
 const JsonTree = require('./helpers/json-tree');
+const { accumulateName, buildNamesDelimitator } = require("./helpers/node-handlers");
+const { calculateDelimiter } = require("./helpers/delimiter-calculator");
 const { wrapArrayChildName } = require('./helpers/node-handlers');
 
 const DEFAULT_RETURN = '';
@@ -21,11 +23,16 @@ function handle(parsedJson) {
     }
 
     const jsonTree = new JsonTree(parsedJson);
-    jsonTree.forEach(wrapArrayChildName);
 
-    return parsedJson;
+    jsonTree.forEach(wrapArrayChildName);
+    const delimiter = calculateDelimiter(
+        jsonTree
+            .reduceByLeaf(accumulateName, '')
+    );
+
+    return jsonTree.reduceByLeaf(buildNamesDelimitator(delimiter), '');
 }
 
 module.exports = {
-    jsonUnfold,
+    jsonUnfold
 };

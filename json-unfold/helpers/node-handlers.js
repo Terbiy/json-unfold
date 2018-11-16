@@ -8,6 +8,24 @@ function wrapArrayChildName(named) {
     }
 }
 
+function accumulateName(accumulatedName, node) {
+    return `${node.name}${accumulatedName}`;
+}
+
+function buildNamesDelimitator(delimiter) {
+    return (accumulatedName, node) => {
+        const { parent } = node;
+
+        if (parent && parent.name && parent.type !== types.ARRAY) {
+            return `${delimiter}${accumulateName(accumulatedName, node)}`;
+        }
+
+        return accumulateName(accumulatedName, node);
+    }
+}
+
 module.exports = {
-    wrapArrayChildName
+    wrapArrayChildName,
+    accumulateName,
+    buildNamesDelimitator
 };
