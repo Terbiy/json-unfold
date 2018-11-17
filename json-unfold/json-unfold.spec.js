@@ -4,7 +4,7 @@ describe('Right, wrong and trivial values', () => {
     const EMPTY_STRING = '';
 
     it('Should accept valid JSON', () => {
-        expect(jsonUnfold('{ "a": 123 }')).toEqual(['a']);
+        expect(jsonUnfold('{ "a": 123 }')).toEqual(['a: number']);
     });
 
     it('Should return empty string on invalid JSON', () => {
@@ -39,23 +39,23 @@ describe('Right, wrong and trivial values', () => {
 describe('Should handle complex JSONs from project description', () => {
     it('Should handle JSON without dot in the names', () => {
         expect(jsonUnfold('{"a": {"b": "3", "c": [1, 1, 2, 3, "5"]}, "d": "hello", "e": true, "f": {"g": null}, "h": [], "i": {}}')).toEqual([
-            'a.b',
-            'a.c[0]',
-            'a.c[1]',
-            'a.c[2]',
-            'a.c[3]',
-            'a.c[4]',
-            'd',
-            'e',
-            'f.g',
-            'h',
-            'i'
+            'a.b: string',
+            'a.c[0]: number',
+            'a.c[1]: number',
+            'a.c[2]: number',
+            'a.c[3]: number',
+            'a.c[4]: string',
+            'd: string',
+            'e: boolean',
+            'f.g: null',
+            'h: array',
+            'i: object'
         ]);
     });
 
     it('Should handle JSON with dot in names', () => {
         expect(jsonUnfold('{"a.b": {"c": {"d": 3}}}')).toEqual([
-            'a.b\\c\\d'
+            'a.b\\c\\d: number'
         ]);
     });
 });

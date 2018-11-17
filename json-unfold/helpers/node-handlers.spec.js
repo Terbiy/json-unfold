@@ -24,7 +24,6 @@ describe('Testing array child wrapper', () => {
     });
 });
 
-
 describe('Testing child delimitator', () => {
     const delimitate = buildNamesDelimitator('.');
     const parent = {
@@ -35,19 +34,23 @@ describe('Testing child delimitator', () => {
         expect([
             {
                 name: 'a',
+                type: 'string',
+                children: [],
                 parent
             },
             {
                 name: 'b',
+                children: [{}],
                 parent
             },
             {
-                name: 'c'
+                name: 'c',
+                children: [{}],
             }
-        ].reduce(delimitate, '')).toBe('c.b.a');
+        ].reduce(delimitate, '')).toBe('c.b.a: string');
     });
 
-    it('Should not delimitate array childs', () => {
+    it('Should not delimitate array children', () => {
         const arrayParent = {
             ...parent,
             type: 'array'
@@ -56,15 +59,19 @@ describe('Testing child delimitator', () => {
         expect([
             {
                 name: '[a]',
-                parent: arrayParent
+                type: 'number',
+                parent: arrayParent,
+                children: []
             },
             {
                 name: '[b]',
-                parent: arrayParent
+                parent: arrayParent,
+                children: [{}]
             },
             {
-                name: 'c'
+                name: 'c',
+                children: [{}]
             }
-        ].reduce(delimitate, '')).toBe('c[b][a]');
+        ].reduce(delimitate, '')).toBe('c[b][a]: number');
     });
 });
