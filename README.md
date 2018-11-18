@@ -1,4 +1,4 @@
-#JSON Unfold
+# JSON Unfold
 
 JSON Unfold is a functionality designed to convert JSON to a array of paths in following way:
 
@@ -36,7 +36,7 @@ JSON Unfold is a functionality designed to convert JSON to a array of paths in f
 
 The purpose of JSON Unfold is to supply communication between developers when discussing the API. It is usually tedious to build the full path by hand, so JSON Unfold comes handy here.
 
-##Avoiding ambiguity
+## Avoiding ambiguity
 
 You can use "." in the key names. Presence of dot leads to ambiguous interpretation in the following case.
 
