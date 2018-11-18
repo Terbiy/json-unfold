@@ -1,6 +1,6 @@
 #JSON Unfold
 
-JSON Unfold is a functionality designed to convert JSON to a textual list of paths in following way:
+JSON Unfold is a functionality designed to convert JSON to a array of paths in following way:
 
 ```json
 {
@@ -18,21 +18,23 @@ JSON Unfold is a functionality designed to convert JSON to a textual list of pat
 }
 ```
 →
-```text
-a.b: number
-a.c[0]: number
-a.c[1]: number
-a.c[2]: number
-a.c[3]: number
-a.c[4]: string
-d: string
-e: boolean
-f.g: null
-h: array
-i: object
+```javascript
+[
+  'a.b: string',
+  'a.c[0]: number',
+  'a.c[1]: number',
+  'a.c[2]: number',
+  'a.c[3]: number',
+  'a.c[4]: string',
+  'd: string',
+  'e: boolean',
+  'f.g: null',
+  'h: array',
+  'i: object'
+]
 ```
 
-The purpose of JSON Unfold is to supply communication between developers when discussing the API.
+The purpose of JSON Unfold is to supply communication between developers when discussing the API. It is usually tedious to build the full path by hand, so JSON Unfold comes handy here.
 
 ##Avoiding ambiguity
 
@@ -48,8 +50,8 @@ You can use "." in the key names. Presence of dot leads to ambiguous interpretat
 }
 ```
 →
-```text
-a.b.c.d: number
+```javascript
+[ 'a.b.c.d: number' ]
 ```
 
 What is it supposed to do for such cases? For such cases, the program uses the rollback of the delimiter. Thus JSON Unfold utilizes the character "\" that is forbidden for JSON keys. That is, for the similar input, the following result is obtained:
@@ -64,6 +66,6 @@ What is it supposed to do for such cases? For such cases, the program uses the r
 }
 ```
 →
-```text
-a.b\c\d: number
+```javascript
+[ 'a.b\\c\\d: number' ]
 ```
